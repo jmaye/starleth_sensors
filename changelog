@@ -1,3 +1,9 @@
+starleth-sensors (0.1-2) trusty; urgency=low
+
+  * adding some files. 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Thu, 11 Sep 2014 11:41:23 +0200
+
 starleth-sensors (0.1-1) trusty; urgency=low
 
   * First draft.

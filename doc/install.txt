@@ -1,0 +1,222 @@
+1. remove guest user:
+  sudo nano /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
+  add the line: allow-guest=false
+2. sudo apt-get update
+   sudo apt-get upgrade
+   sudo apt-get dist-upgrade
+   sudo apt-get autoclean
+   sudo apt-get autoremove
+3. sudo shutdown -r now
+4. sudo apt-get install python-software-properties vim htop
+5. sudo add-apt-repository ppa:jmaye/ethz
+   sudo add-apt-repository ppa:jmaye/ros
+   sudo add-apt-repository ppa:kralf/asl
+   sudo apt-get update
+6. sudo apt-get install libvelodyne-dev remake libsnappy-dev
+   * optional: sudo apt-get install libvelodyne-console-tools libvelodyne-gui-tools libvelodyne-doc remake-doc
+7. sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
+   wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
+   TO BE CHANGED LATER ON TO POINT ON RALF'S PPA
+   sudo apt-get update
+8. sudo apt-get install git
+   git config --global user.name "Jerome Maye"
+   git config --global user.email "jerome.maye@mavt.ethz.ch"
+   git config --global credential.helper cache
+   vi ~/.gitconfig
+   add the following:
+   [alias]
+        co = checkout
+        br = branch
+        ci = commit
+        st = status
+9. ssh-keygen
+10. copy the ~/.ssh/id_rsa.pub content to github, bitbuckets, and whatever
+  machine
+11. mkdir git
+    cd git
+    *Velodyne*
+    git clone git@github.com:jmaye/velodyne_ros.git
+    *Xsens Mti*
+    git clone git@bitbucket.org:ethz-asl-lr/c_xsens_mti.git
+    *VI-Sensor*
+    git clone git@github.com:ethz-asl/libvisensor_devel.git
+    git clone git@github.com:ethz-asl/visensor_node_devel.git
+    git clone git@github.com:skybotix/visensor_tools.git
+    *T&R*
+    git clone git@github.com:jmaye/velodyne-post-ros.git
+    git clone git@bitbucket.org:kruesip/artor-basics.git
+    git clone git@github.com:ethz-asl/asrl_navigation.git
+    git clone git@github.com:ethz-asl/vcharge_motion_planning.git
+    git clone --recursive git@github.com:jmaye/ethzasl_icp_mapping.git
+    git clone git@github.com:jmaye/starleth_tr.git
+    git clone git@github.com:ethz-asl/Schweizer-Messer.git
+    git clone git@github.com:catkin/catkin_simple.git
+    git clone git@github.com:ethz-asl/eigen_catkin.git
+    *VO*
+    git clone git@github.com:skybotix/fovis.git
+    git clone git@github.com:jmaye/libfovis.git
+    git clone git@github.com:jmaye/viso2.git
+    git clone git@github.com:ethz-asl/aslam_visual_inertial.git
+    *Leica*
+    git clone git@github.com:ethz-asl/leica_totalstation_interface.git
+12. cd velodyne_ros
+    sudo apt-get install g++ cmake cmake-curses-gui ros-indigo-ros-base ros-indigo-diagnostic-updater ros-indigo-sensor-msgs ros-indigo-std-msgs ros-indigo-rospy ros-indigo-rosbash ros-indigo-roscpp
+    sudo rosdep init
+    rosdep update
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
+    make -j
+    make packages_install
+    cd ..
+    cd ..
+    cd velodyne-post-ros
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
+    make -j
+    make packages_install
+13. vi ~/.bashrc
+    add the following line:
+    alias indigo='source /opt/ros/indigo/setup.bash && export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git'
+    open new terminal tab for this to take effect
+14. create catkin workspace:
+    indigo
+    mkdir -p ~/catkin_ws/src
+    cd ~/catkin_ws/src
+    catkin_init_workspace
+    cd ~/catkin_ws/
+    catkin_make
+    vi ~/.bashrc
+    add the line:
+    alias indigo_catkin_ws='source ~/catkin_ws/devel/setup.bash'
+    open new terminal tab for this to take effect
+15. cd ~/catkin_ws/src
+    ln -s ~/git/Schweizer-Messer/ schweizer-messer 
+    ln -s ~/git/catkin_simple/ catkin_simple
+    ln -s ~/git/eigen_catkin/ eigen_catkin
+16. cd ~/catkin_ws/
+    sudo apt-get install python-catkintools python-rosinstall
+    indigo_catkin_ws
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release catkin_simple
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release eigen_catkin
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_eigen
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_common
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_property_tree
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release numpy_eigen
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_kinematics
+17. mkdir ~/rosbuild_ws
+    cd ~/rosbuild_ws
+    rosws init . ~/catkin_ws/devel
+    vi ~/.bashrc
+    add the line:
+    alias indigo_rosbuild_ws='source ~/rosbuild_ws/setup.bash && export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/rosbuild_ws'
+    open new terminal for this to take effect
+18. indigo_rosbuild_ws
+    cd ~/rosbuild_ws
+    sudo apt-get install ros-indigo-tf ros-indigo-tf-conversions ros-indigo-eigen-conversions ros-indigo-joy ros-indigo-map-msgs ros-indigo-driver-base libargtable2-dev ros-indigo-rviz ros-indigo-rqt-console ros-indigo-rqt-py-common chrony ros-indigo-sound-play
+    ln -s ~/git/ethzasl_icp_mapping/ ethzasl_icp_mapping
+    rosdep install ethzasl_icp_mapping
+    ln -s ~/git/asrl_navigation/ asrl_navigation
+    cd asrl_navigation
+    git checkout starleth_devel
+    cd ..
+    ln -s ~/git/vcharge_motion_planning/ vcharge_motion_planning
+    cd vcharge_motion_planning
+    git checkout starleth_devel
+    cd ..
+    ln -s ~/git/starleth_tr/ starleth_tr
+    rosmake starleth_tr
+19. T&R:
+    indigo_rosbuild_ws
+    roslaunch starleth_tr tr_server_icp.launch
+    *Teach*:
+    rosrun icp_interface createNewPoseGraph <absolute_path>
+    rosrun icp_interface transitionToMappingNewGraph 10.0 ->at start
+    rosrun icp_interface transitionToIdle 10.0 ->at goal
+    *Visualize*:
+    roscd asrl_icp_navigation
+    mkdir <absolute_path_to_output>
+    bin/offlinePointCloudExporter camera <absolute_path_to_pose_graph> <absolute_path_to_output/prefix>
+    sudo apt-get install paraview
+    load the vtk files in paraview, press the Apply button
+    *Repeat*:
+    rosrun icp_interface loadExistingPoseGraph <absolute_path_to_pose_graph>
+    rosrun icp_interface transitionToFollowingAT <startID> <goadID> 10.0
+    rosrun icp_interface transitionToIdle 10.0->at goal
+20. IMU Xsens MTi:
+    indigo_rosbuild_ws
+    cd ~/rosbuild_ws
+    ln -s ~/git/c_xsens_mti/ c_xsens_mti
+    cd c_xsens_mti
+    git checkout starleth
+    cd ..
+    rosmake c_xsens_mti
+21. VI-sensor:
+    sudo apt-get install ros-indigo-camera-info-manager
+    cd ~/catkin_ws/src
+    ln -s ~/git/libvisensor_devel libvisensor_devel
+    ln -s ~/git/visensor_node_devel visensor_node_devel
+    cd visensor_node_devel
+    git checkout fix/catchSensorNotFound
+    cd ~/catkin_ws/
+    indigo_catkin_ws 
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_node
+    *update tools:*
+    sudo apt-get install libssh2-1-dev
+    cd ~/git/visensor_tools/visensor_update
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release ..
+    make -j
+    cd ~/git/visensor_tools/visensor_update/bin
+    ./visensor_update 10.0.0.1 update
+    *calibration flasher tool*
+    cd ~/catkin_ws/src
+    ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher
+    cd ~/catkin_ws/
+    indigo_catkin_ws
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_calibration_flasher
+    *launch the node*
+    rosrun visensor_node visensor_node
+22. Visual state estimation 1:
+    sudo apt-get install ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view
+    cd ~/catkin_ws/src
+    ln -s ~/git/libfovis/ libfovis
+    ln -s ~/git/fovis/ fovis
+    cd ~/catkin_ws/
+    indigo_catkin_ws
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release fovis_ros
+    roslaunch fovis_ros fovis_stereo.launch
+23. Visual state estimation 2:
+    cd ~/catkin_ws/src
+    ln -s ~/git/viso2/ viso2
+    cd ~/catkin_ws/src
+    indigo_catkin_ws
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release viso2_ros
+    roslaunch viso2_ros demo.launch
+24. Visual inertial state estimation 3:
+    aslam_visual_inertial->from Leuti
+
+25. Leica:
+    indigo
+    rosrun leica_interface leica_node.py [options]
+    rosrun leica_interface leica_node.py -h    * to get help on the options
+26. Kinect:
+    sudo apt-get install ros-indigo-freenect-stack
+    error:
+    [26687.769616] usb 2-7: Manufacturer: PrimeSense
+    [26687.769865] usb 2-7: Not enough bandwidth for new device state.
+    [26687.769872] usb 2-7: can't set config #1, error -28
+
+*TODO*
+- ROS wrapper for xsens
+- Kinect driver
+- diagnostic tools for xsens, vi-sensor, T&R, velodyne_post, system monitoring, Kinect
+- Timestamp correction Velodyne
+- Correcting the Velodyne scans w.r.t. pose estimator
+- launch scripts for logging all sensors
+- calibration of VI
+- network configuration
+- analysis of CPU load, network load
+- better deployement strategy
