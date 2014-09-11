@@ -1,3 +1,9 @@
+starleth-sensors (0.1-3) UNRELEASED; urgency=medium
+
+  * calibration 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Thu, 11 Sep 2014 13:11:04 +0200
+
 starleth-sensors (0.1-2) trusty; urgency=low
 
   * adding some files. 

@@ -105,6 +105,7 @@
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_property_tree
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release numpy_eigen
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_kinematics
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_logging
 17. mkdir ~/rosbuild_ws
     cd ~/rosbuild_ws
     rosws init . ~/catkin_ws/devel
@@ -153,7 +154,7 @@
     cd ..
     rosmake c_xsens_mti
 21. VI-sensor:
-    sudo apt-get install ros-indigo-camera-info-manager
+    sudo apt-get install ros-indigo-camera-info-manager ros-indigo-cv-bridge
     cd ~/catkin_ws/src
     ln -s ~/git/libvisensor_devel libvisensor_devel
     ln -s ~/git/visensor_node_devel visensor_node_devel
@@ -177,6 +178,9 @@
     cd ~/catkin_ws/
     indigo_catkin_ws
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_calibration_flasher
+    roscore
+    rosparam load <path_to_your_camchain_yaml_file>
+    rosrun visensor_calibration_flasher visensor_calibration_flasher
     *launch the node*
     rosrun visensor_node visensor_node
 22. Visual state estimation 1:
@@ -191,7 +195,7 @@
 23. Visual state estimation 2:
     cd ~/catkin_ws/src
     ln -s ~/git/viso2/ viso2
-    cd ~/catkin_ws/src
+    cd ~/catkin_ws
     indigo_catkin_ws
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release viso2_ros
     roslaunch viso2_ros demo.launch
