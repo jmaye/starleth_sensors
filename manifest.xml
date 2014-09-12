@@ -1,16 +1,10 @@
 <package>
-  <description brief="starleth_tr">
-     starleth_tr
+  <description brief="starleth_sensors">
+     starleth_sensors
   </description>
   <author>Jerome Maye</author>
   <license>LGPL</license>
   <review status="unreviewed" notes=""/>
-  <url>http://github.com/jmaye/starleth_tr</url>
-  <depend package="asrl_icp_pipeline"/>
-  <depend package="icp_interface"/>
-  <depend package="tf_gui"/>
-  <depend package="path_tracker"/>
-  <depend package="path_tracker_nominal"/>
-  <depend package="graph_following_safety"/>
-  <depend package="local_planning_ros"/>
+  <url>http://github.com/jmaye/starleth_sensors</url>
+<!--  <depend package="local_planning_ros"/>-->
 </package>

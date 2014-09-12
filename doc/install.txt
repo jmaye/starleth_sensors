@@ -10,9 +10,10 @@
 4. sudo apt-get install python-software-properties vim htop
 5. sudo add-apt-repository ppa:jmaye/ethz
    sudo add-apt-repository ppa:jmaye/ros
+   sudo add-apt-repository ppa:jmaye/starleth
    sudo add-apt-repository ppa:kralf/asl
    sudo apt-get update
-6. sudo apt-get install libvelodyne-dev remake libsnappy-dev
+6. sudo apt-get install libvelodyne-dev remake libsnappy-dev starleth-udev
    * optional: sudo apt-get install libvelodyne-console-tools libvelodyne-gui-tools libvelodyne-doc remake-doc
 7. sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
@@ -22,6 +23,7 @@
    git config --global user.name "Jerome Maye"
    git config --global user.email "jerome.maye@mavt.ethz.ch"
    git config --global credential.helper cache
+   git config --global push.default simple
    vi ~/.gitconfig
    add the following:
    [alias]
@@ -183,6 +185,7 @@
     rosrun visensor_calibration_flasher visensor_calibration_flasher
     *launch the node*
     rosrun visensor_node visensor_node
+    roslaunch visensor_node dense.launch
 22. Visual state estimation 1:
     sudo apt-get install ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view
     cd ~/catkin_ws/src
