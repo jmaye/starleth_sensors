@@ -61,6 +61,8 @@
     git clone git@github.com:ethz-asl/aslam_visual_inertial.git
     *Leica*
     git clone git@github.com:ethz-asl/leica_totalstation_interface.git
+    *System monitoring*
+    git clone git@github.com:jmaye/starleth-system-monitor-ros.git
 12. cd velodyne_ros
     sudo apt-get install g++ cmake cmake-curses-gui ros-indigo-ros-base ros-indigo-diagnostic-updater ros-indigo-sensor-msgs ros-indigo-std-msgs ros-indigo-rospy ros-indigo-rosbash ros-indigo-roscpp
     sudo rosdep init
@@ -73,6 +75,14 @@
     cd ..
     cd ..
     cd velodyne-post-ros
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
+    make -j
+    make packages_install
+    cd ..
+    cd ..
+    cd starleth-system-monitor-ros
     mkdir build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
@@ -218,12 +228,12 @@
 
 *TODO*
 - ROS wrapper for xsens
-- Kinect driver
+- Kinect driver->Remo
 - diagnostic tools for xsens, vi-sensor, T&R, velodyne_post, system monitoring, Kinect
 - Timestamp correction Velodyne
 - Correcting the Velodyne scans w.r.t. pose estimator
 - launch scripts for logging all sensors
-- calibration of VI
+- calibration of VI->dataset on site
 - network configuration
 - analysis of CPU load, network load
 - better deployement strategy
