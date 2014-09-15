@@ -189,7 +189,6 @@
     ln -s ~/git/libvisensor_devel libvisensor_devel
     ln -s ~/git/visensor_node_devel visensor_node_devel
     cd visensor_node_devel
-    git checkout fix/catchSensorNotFound
     cd ~/catkin_ws/
     indigo_catkin_ws 
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_node
@@ -201,7 +200,7 @@
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make -j
     cd ~/git/visensor_tools/visensor_update/bin
-    ./visensor_update 10.0.0.1 update-develop
+    ./visensor_update 10.0.0.1 update-develop or ./visensor_update <ip> update-develop if we have an DCHP server providing it an IP
     *calibration flasher tool*
     cd ~/catkin_ws/src
     ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher
@@ -214,6 +213,24 @@
     *launch the node*
     rosrun visensor_node visensor_node
     roslaunch visensor_node dense.launch
+    *dynamic reconfigure*
+    sudo apt-get install ros-indigo-rqt-reconfigure
+    rosrun rqt_reconfigure rqt_reconfigure
+    in case of failure: rqt --force-discover
+    The parameters which are important for the calibration can be set with
+    rosrun dynamic_reconfigure dynparam set /visensor_node "{'cam0_agc_enable': 0, 'cam0_aec_enable': 0, 'cam0_coarse_shutter_width': 20}"
+    rosrun dynamic_reconfigure dynparam set /visensor_node "{'cam1_agc_enable': 0, 'cam1_aec_enable': 0, 'cam1_coarse_shutter_width': 20}"
+    *calibration*
+    Record 3 static datasets:
+    rosbag record /cam0/image_raw /cam1/image_raw -O static1.bag
+    rosbag record /cam0/image_raw /cam1/image_raw -O static2.bag
+    rosbag record /cam0/image_raw /cam1/image_raw -O static3.bag
+    Record 3 dynamic datasets:
+    rosbag record /cam0/image_raw /cam1/image_raw /imu0 -O dynamic1.bag
+    rosbag record /cam0/image_raw /cam1/image_raw /imu0 -O dynamic2.bag
+    rosbag record /cam0/image_raw /cam1/image_raw /imu0 -O dynamic3.bag
+    The calibration process is described here:
+    https://github.com/ethz-asl/kalibr/wiki
 22. Visual state estimation 1:
     sudo apt-get install ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view
     cd ~/catkin_ws/src
@@ -244,6 +261,10 @@
     [26687.769865] usb 2-7: Not enough bandwidth for new device state.
     [26687.769872] usb 2-7: can't set config #1, error -28
 
+    Updating firmware makes it work!
+    sudo apt-get install ros-indigo-openni2-launch
+    roslaunch openni2_launch openni2.launch
+
 27. Diagnostics tools:
     roslaunch starleth_system_monitor system_monitor.launch
     roslaunch starleth_diagnostics aggregator.launch
@@ -251,14 +272,18 @@
     or
     rosrun rqt_runtime_monitor rqt_runtime_monitor
 
+28. Webcams:
+    sudo apt-get install ros-indigo-usb-cam
+    rosparam set usb_cam/pixel_format yuyv
+    rosparam set usb_cam/video_device /dev/video1 ->replace /dev/video1 with your camera, use a udev rule for that
+    rosrun usb_cam usb_cam_node
+
 *TODO*
 - ROS wrapper for xsens
-- Kinect driver->Remo
 - diagnostic tools for xsens, vi-sensor, T&R, velodyne_post, Kinect
 - Timestamp correction Velodyne
 - Correcting the Velodyne scans w.r.t. pose estimator
 - launch scripts for logging all sensors
 - calibration of VI->dataset on site
-- network configuration
 - analysis of CPU load, network load
 - better deployement strategy
