@@ -1,3 +1,9 @@
+starleth-sensors (0.1-6) trusty; urgency=low
+
+  * instructions for diagnostics. 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Mon, 15 Sep 2014 11:12:43 +0200
+
 starleth-sensors (0.1-5) trusty; urgency=lowx
 
   * new instructions 

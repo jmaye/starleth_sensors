@@ -63,8 +63,10 @@
     git clone git@github.com:ethz-asl/leica_totalstation_interface.git
     *System monitoring*
     git clone git@github.com:jmaye/starleth-system-monitor-ros.git
+    *Diagnostics*
+    git clone git@github.com:jmaye/starleth-diagnostics-ros.git
 12. cd velodyne_ros
-    sudo apt-get install g++ cmake cmake-curses-gui ros-indigo-ros-base ros-indigo-diagnostic-updater ros-indigo-sensor-msgs ros-indigo-std-msgs ros-indigo-rospy ros-indigo-rosbash ros-indigo-roscpp
+    sudo apt-get install g++ cmake cmake-curses-gui ros-indigo-ros-base ros-indigo-diagnostic-updater ros-indigo-sensor-msgs ros-indigo-std-msgs ros-indigo-rospy ros-indigo-rosbash ros-indigo-roscpp sysstat hddtemp ifstat ros-indigo-diagnostic-aggregator ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
     sudo rosdep init
     rosdep update
     mkdir build
@@ -83,6 +85,14 @@
     cd ..
     cd ..
     cd starleth-system-monitor-ros
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
+    make -j
+    make packages_install
+    cd ..
+    cd ..
+    cd starleth-diagnostics-ros
     mkdir build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
@@ -226,10 +236,17 @@
     [26687.769865] usb 2-7: Not enough bandwidth for new device state.
     [26687.769872] usb 2-7: can't set config #1, error -28
 
+27. Diagnostics tools:
+    roslaunch starleth_system_monitor system_monitor.launch
+    roslaunch starleth_diagnostics aggregator.launch
+    rosrun rqt_robot_monitor rqt_robot_monitor
+    or
+    rosrun rqt_runtime_monitor rqt_runtime_monitor
+
 *TODO*
 - ROS wrapper for xsens
 - Kinect driver->Remo
-- diagnostic tools for xsens, vi-sensor, T&R, velodyne_post, system monitoring, Kinect
+- diagnostic tools for xsens, vi-sensor, T&R, velodyne_post, Kinect
 - Timestamp correction Velodyne
 - Correcting the Velodyne scans w.r.t. pose estimator
 - launch scripts for logging all sensors
