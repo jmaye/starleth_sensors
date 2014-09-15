@@ -7,7 +7,7 @@
    sudo apt-get autoclean
    sudo apt-get autoremove
 3. sudo shutdown -r now
-4. sudo apt-get install python-software-properties vim htop
+4. sudo apt-get install python-software-properties vim htop openssh-server
 5. sudo add-apt-repository ppa:jmaye/ethz
    sudo add-apt-repository ppa:jmaye/ros
    sudo add-apt-repository ppa:jmaye/starleth
