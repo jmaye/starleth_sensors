@@ -13,7 +13,7 @@
    sudo add-apt-repository ppa:jmaye/starleth
    sudo add-apt-repository ppa:kralf/asl
    sudo apt-get update
-6. sudo apt-get install libvelodyne-dev remake libsnappy-dev starleth-udev
+6. sudo apt-get install libvelodyne-dev remake libsnappy-dev starleth-udev starleth-init
    * optional: sudo apt-get install libvelodyne-console-tools libvelodyne-gui-tools libvelodyne-doc remake-doc
 7. sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
@@ -93,6 +93,14 @@
     cd ..
     cd ..
     cd starleth-diagnostics-ros
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
+    make -j
+    make packages_install
+    cd ..
+    cd ..
+    cd starleth-init
     mkdir build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
@@ -193,7 +201,7 @@
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make -j
     cd ~/git/visensor_tools/visensor_update/bin
-    ./visensor_update 10.0.0.1 update
+    ./visensor_update 10.0.0.1 update-develop
     *calibration flasher tool*
     cd ~/catkin_ws/src
     ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher

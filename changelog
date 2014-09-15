@@ -1,3 +1,9 @@
+starleth-sensors (0.1-7) trusty; urgency=low
+
+  * new instructions for init 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Mon, 15 Sep 2014 13:55:25 +0200
+
 starleth-sensors (0.1-6) trusty; urgency=low
 
   * instructions for diagnostics. 
