@@ -7,19 +7,16 @@
    sudo apt-get autoclean
    sudo apt-get autoremove
 3. sudo shutdown -r now
-4. sudo apt-get install python-software-properties vim htop openssh-server
+4. sudo apt-get install python-software-properties vim htop openssh-server g++ cmake cmake-curses-gui chrony
 5. sudo add-apt-repository ppa:jmaye/ethz
    sudo add-apt-repository ppa:jmaye/ros
    sudo add-apt-repository ppa:jmaye/starleth
-   sudo add-apt-repository ppa:kralf/asl
-   sudo apt-get update
-6. sudo apt-get install libvelodyne-dev remake libsnappy-dev starleth-udev starleth-init
-   * optional: sudo apt-get install libvelodyne-console-tools libvelodyne-gui-tools libvelodyne-doc remake-doc
-7. sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
+   sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
    TO BE CHANGED LATER ON TO POINT ON RALF'S PPA
-   sudo apt-get update
-8. sudo apt-get install git
+6. sudo apt-get update
+   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
+7. sudo apt-get install git
    git config --global user.name "Jerome Maye"
    git config --global user.email "jerome.maye@mavt.ethz.ch"
    git config --global credential.helper cache
@@ -31,87 +28,41 @@
         br = branch
         ci = commit
         st = status
-9. ssh-keygen
-10. copy the ~/.ssh/id_rsa.pub content to github, bitbuckets, and whatever
-  machine
-11. mkdir git
-    cd git
-    *Velodyne*
-    git clone git@github.com:jmaye/velodyne_ros.git
-    *Xsens Mti*
-    git clone git@bitbucket.org:ethz-asl-lr/c_xsens_mti.git
-    *VI-Sensor*
-    git clone git@github.com:ethz-asl/libvisensor_devel.git
-    git clone git@github.com:ethz-asl/visensor_node_devel.git
-    git clone git@github.com:skybotix/visensor_tools.git
-    *T&R*
-    git clone git@github.com:jmaye/velodyne-post-ros.git
-    git clone git@bitbucket.org:kruesip/artor-basics.git
-    git clone git@github.com:ethz-asl/asrl_navigation.git
-    git clone git@github.com:ethz-asl/vcharge_motion_planning.git
-    git clone --recursive git@github.com:jmaye/ethzasl_icp_mapping.git
-    git clone git@github.com:jmaye/starleth_tr.git
-    git clone git@github.com:ethz-asl/Schweizer-Messer.git
-    git clone git@github.com:catkin/catkin_simple.git
-    git clone git@github.com:ethz-asl/eigen_catkin.git
-    *VO*
-    git clone git@github.com:skybotix/fovis.git
-    git clone git@github.com:jmaye/libfovis.git
-    git clone git@github.com:jmaye/viso2.git
-    git clone git@github.com:ethz-asl/aslam_visual_inertial.git
-    *Leica*
-    git clone git@github.com:ethz-asl/leica_totalstation_interface.git
-    *System monitoring*
-    git clone git@github.com:jmaye/starleth-system-monitor-ros.git
-    *Diagnostics*
-    git clone git@github.com:jmaye/starleth-diagnostics-ros.git
-12. cd velodyne_ros
-    sudo apt-get install g++ cmake cmake-curses-gui ros-indigo-ros-base ros-indigo-diagnostic-updater ros-indigo-sensor-msgs ros-indigo-std-msgs ros-indigo-rospy ros-indigo-rosbash ros-indigo-roscpp sysstat hddtemp ifstat ros-indigo-diagnostic-aggregator ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
-    sudo rosdep init
-    rosdep update
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
-    make -j
-    make packages_install
-    cd ..
-    cd ..
-    cd velodyne-post-ros
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
-    make -j
-    make packages_install
-    cd ..
-    cd ..
-    cd starleth-system-monitor-ros
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
-    make -j
-    make packages_install
-    cd ..
-    cd ..
-    cd starleth-diagnostics-ros
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
-    make -j
-    make packages_install
-    cd ..
-    cd ..
-    cd starleth-init
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release -DROS_DISTRIBUTION=indigo ..
-    make -j
-    make packages_install
-13. vi ~/.bashrc
+8. ssh-keygen
+   copy the ~/.ssh/id_rsa.pub content to github, bitbuckets, and whatever
+   machine
+9. mkdir ~/git
+   cd ~/git
+   *Xsens Mti*
+   git clone git@bitbucket.org:ethz-asl-lr/c_xsens_mti.git
+   *VI-Sensor*
+   git clone git@github.com:ethz-asl/libvisensor_devel.git
+   git clone git@github.com:ethz-asl/visensor_node_devel.git
+   git clone git@github.com:skybotix/visensor_tools.git
+   *T&R*
+   git clone git@bitbucket.org:kruesip/artor-basics.git
+   git clone git@github.com:ethz-asl/asrl_navigation.git
+   git clone git@github.com:ethz-asl/vcharge_motion_planning.git
+   git clone --recursive git@github.com:jmaye/ethzasl_icp_mapping.git
+   git clone git@github.com:jmaye/starleth_tr.git
+   git clone git@github.com:ethz-asl/Schweizer-Messer.git
+   git clone git@github.com:catkin/catkin_simple.git
+   git clone git@github.com:ethz-asl/eigen_catkin.git
+   *VO*
+   git clone git@github.com:skybotix/fovis.git
+   git clone git@github.com:jmaye/libfovis.git
+   git clone git@github.com:jmaye/viso2.git
+   git clone git@github.com:ethz-asl/aslam_visual_inertial.git
+   *Leica*
+   git clone git@github.com:ethz-asl/leica_totalstation_interface.git
+10. vi ~/.bashrc
     add the following line:
     alias indigo='source /opt/ros/indigo/setup.bash && export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git'
     open new terminal tab for this to take effect
-14. create catkin workspace:
+11. create catkin workspace:
     indigo
+    sudo rosdep init
+    rosdep update
     mkdir -p ~/catkin_ws/src
     cd ~/catkin_ws/src
     catkin_init_workspace
@@ -121,12 +72,18 @@
     add the line:
     alias indigo_catkin_ws='source ~/catkin_ws/devel/setup.bash'
     open new terminal tab for this to take effect
-15. cd ~/catkin_ws/src
-    ln -s ~/git/Schweizer-Messer/ schweizer-messer 
+12. cd ~/catkin_ws/src
+    ln -s ~/git/Schweizer-Messer/ schweizer-messer
     ln -s ~/git/catkin_simple/ catkin_simple
     ln -s ~/git/eigen_catkin/ eigen_catkin
-16. cd ~/catkin_ws/
-    sudo apt-get install python-catkintools python-rosinstall
+    ln -s ~/git/libvisensor_devel libvisensor_devel
+    ln -s ~/git/visensor_node_devel visensor_node_devel
+    ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher
+    ln -s ~/git/libfovis/ libfovis
+    ln -s ~/git/fovis/ fovis
+    ln -s ~/git/viso2/ viso2
+13. cd ~/catkin_ws/
+    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view
     indigo_catkin_ws
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release catkin_simple
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release eigen_catkin
@@ -136,16 +93,26 @@
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release numpy_eigen
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_kinematics
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_logging
-17. mkdir ~/rosbuild_ws
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_node
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_calibration_flasher
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release fovis_ros
+    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release viso2_ros
+14. sudo apt-get install libssh2-1-dev
+    cd ~/git/visensor_tools/visensor_update
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=Release ..
+    make -j
+15. mkdir ~/rosbuild_ws
     cd ~/rosbuild_ws
     rosws init . ~/catkin_ws/devel
     vi ~/.bashrc
     add the line:
     alias indigo_rosbuild_ws='source ~/rosbuild_ws/setup.bash && export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/rosbuild_ws'
     open new terminal for this to take effect
-18. indigo_rosbuild_ws
+16. indigo_rosbuild_ws
     cd ~/rosbuild_ws
-    sudo apt-get install ros-indigo-tf ros-indigo-tf-conversions ros-indigo-eigen-conversions ros-indigo-joy ros-indigo-map-msgs ros-indigo-driver-base libargtable2-dev ros-indigo-rviz ros-indigo-rqt-console ros-indigo-rqt-py-common chrony ros-indigo-sound-play
+    sudo apt-get install ros-indigo-tf ros-indigo-tf-conversions ros-indigo-eigen-conversions ros-indigo-joy ros-indigo-map-msgs ros-indigo-driver-base libargtable2-dev ros-indigo-rviz ros-indigo-rqt-console ros-indigo-rqt-py-common ros-indigo-sound-play
     ln -s ~/git/ethzasl_icp_mapping/ ethzasl_icp_mapping
     rosdep install ethzasl_icp_mapping
     ln -s ~/git/asrl_navigation/ asrl_navigation
@@ -158,7 +125,12 @@
     cd ..
     ln -s ~/git/starleth_tr/ starleth_tr
     rosmake starleth_tr
-19. T&R:
+    ln -s ~/git/c_xsens_mti/ c_xsens_mti
+    cd c_xsens_mti
+    git checkout starleth
+    cd ..
+    rosmake c_xsens_mti
+17. T&R:
     indigo_rosbuild_ws
     roslaunch starleth_tr tr_server_icp.launch
     *Teach*:
@@ -175,38 +147,12 @@
     rosrun icp_interface loadExistingPoseGraph <absolute_path_to_pose_graph>
     rosrun icp_interface transitionToFollowingAT <startID> <goadID> 10.0
     rosrun icp_interface transitionToIdle 10.0->at goal
-20. IMU Xsens MTi:
-    indigo_rosbuild_ws
-    cd ~/rosbuild_ws
-    ln -s ~/git/c_xsens_mti/ c_xsens_mti
-    cd c_xsens_mti
-    git checkout starleth
-    cd ..
-    rosmake c_xsens_mti
-21. VI-sensor:
-    sudo apt-get install ros-indigo-camera-info-manager ros-indigo-cv-bridge
-    cd ~/catkin_ws/src
-    ln -s ~/git/libvisensor_devel libvisensor_devel
-    ln -s ~/git/visensor_node_devel visensor_node_devel
-    cd visensor_node_devel
-    cd ~/catkin_ws/
-    indigo_catkin_ws 
-    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_node
+18. VI-sensor:
     *update tools:*
-    sudo apt-get install libssh2-1-dev
-    cd ~/git/visensor_tools/visensor_update
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release ..
-    make -j
     cd ~/git/visensor_tools/visensor_update/bin
     ./visensor_update 10.0.0.1 update-develop or ./visensor_update <ip> update-develop if we have an DCHP server providing it an IP
     *calibration flasher tool*
-    cd ~/catkin_ws/src
-    ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher
-    cd ~/catkin_ws/
     indigo_catkin_ws
-    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_calibration_flasher
     roscore
     rosparam load <path_to_your_camchain_yaml_file>
     rosrun visensor_calibration_flasher visensor_calibration_flasher
@@ -231,52 +177,33 @@
     rosbag record /cam0/image_raw /cam1/image_raw /imu0 -O dynamic3.bag
     The calibration process is described here:
     https://github.com/ethz-asl/kalibr/wiki
-22. Visual state estimation 1:
-    sudo apt-get install ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view
-    cd ~/catkin_ws/src
-    ln -s ~/git/libfovis/ libfovis
-    ln -s ~/git/fovis/ fovis
-    cd ~/catkin_ws/
-    indigo_catkin_ws
-    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release fovis_ros
+18. Visual state estimation 1:
     roslaunch fovis_ros fovis_stereo.launch
-23. Visual state estimation 2:
-    cd ~/catkin_ws/src
-    ln -s ~/git/viso2/ viso2
-    cd ~/catkin_ws
-    indigo_catkin_ws
-    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release viso2_ros
+19. Visual state estimation 2:
     roslaunch viso2_ros demo.launch
-24. Visual inertial state estimation 3:
+20. Visual inertial state estimation 3:
     aslam_visual_inertial->from Leuti
-
-25. Leica:
+21. Leica:
     indigo
     rosrun leica_interface leica_node.py [options]
     rosrun leica_interface leica_node.py -h    * to get help on the options
-26. Kinect:
+22. Kinect:
     sudo apt-get install ros-indigo-freenect-stack
     error:
     [26687.769616] usb 2-7: Manufacturer: PrimeSense
     [26687.769865] usb 2-7: Not enough bandwidth for new device state.
     [26687.769872] usb 2-7: can't set config #1, error -28
-
     Updating firmware makes it work!
     sudo apt-get install ros-indigo-openni2-launch
     roslaunch openni2_launch openni2.launch
-
-27. Diagnostics tools:
-    roslaunch starleth_system_monitor system_monitor.launch
-    roslaunch starleth_diagnostics aggregator.launch
+23. Diagnostics tools:
     rosrun rqt_robot_monitor rqt_robot_monitor
     or
     rosrun rqt_runtime_monitor rqt_runtime_monitor
-
-28. Webcams:
+24. Webcams:
     sudo apt-get install ros-indigo-usb-cam
-    rosparam set usb_cam/pixel_format yuyv
-    rosparam set usb_cam/video_device /dev/video1 ->replace /dev/video1 with your camera, use a udev rule for that
-    rosrun usb_cam usb_cam_node
+    rosrun usb_cam usb_cam_node __name:=usb_cam0 _video_device:=/dev/video1 _pixel_format:=yuyv
+    rosrun usb_cam usb_cam_node __name:=usb_cam1 _video_device:=/dev/video2 _pixel_format:=yuyv
 
 *TODO*
 - ROS wrapper for xsens

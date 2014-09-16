@@ -1,3 +1,9 @@
+starleth-sensors (0.1-10) trusty; urgency=low
+
+  * updating doc.
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Tue, 16 Sep 2014 20:07:52 +0200
+
 starleth-sensors (0.1-9) trusty; urgency=low
 
   * adding a dep. 
