@@ -1,3 +1,9 @@
+starleth-sensors (0.1-11) trusty; urgency=medium
+
+  * depth registration for Kinect 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Wed, 17 Sep 2014 19:03:37 +0200
+
 starleth-sensors (0.1-10) trusty; urgency=low
 
   * updating doc.
