@@ -218,8 +218,8 @@
     rosrun rqt_runtime_monitor rqt_runtime_monitor
 26. Webcams:
     sudo apt-get install ros-indigo-usb-cam
-    rosrun usb_cam usb_cam_node __name:=usb_cam0 _video_device:=/dev/video1 _pixel_format:=yuyv
-    rosrun usb_cam usb_cam_node __name:=usb_cam1 _video_device:=/dev/video2 _pixel_format:=yuyv
+    rosrun usb_cam usb_cam_node __name:=usb_cam0 _video_device:=/dev/starleth/usb_cam0 _pixel_format:=yuyv _framerate:=15
+    rosrun usb_cam usb_cam_node __name:=usb_cam1 _video_device:=/dev/starleth/usb_cam1 _pixel_format:=yuyv _framerate:=15
 27. *New Xsens*:
   sudo apt-get install libusb-dev
   1) Download the MT Software Suite and install it on a Windows machine (you may skip this step and use default sensor configuration), then download the MT SDK for Linux and install it on a Linux machine (this should be the machine that ROS is installed on).
