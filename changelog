@@ -1,3 +1,9 @@
+starleth-sensors (0.1-13) trusty; urgency=medium
+
+  * updating configuration for chrony
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Thu, 18 Sep 2014 11:03:00 +0200
+
 starleth-sensors (0.1-12) trusty; urgency=low
 
   * adding chrony configuration 

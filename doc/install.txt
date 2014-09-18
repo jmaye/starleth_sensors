@@ -241,6 +241,21 @@
   catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release receive_xsens
   5) Roslaunch the “receive_xsens.launch” file in /launch folder. The driver will publish sensor_msgs/Imu typed messages named /imu/data.
   Our serial key is R945-E2EF-RPP0-W86J-P408
+28. *Chrony*
+    on starleth-hlpc:
+    sudo cp ~/git/starleth_sensors/conf/chrony/chrony.conf.MASTER /etc/chrony/chrony.conf
+    on teamlio laptop:
+    sudo cp ~/git/starleth_sensors/conf/chrony/chrony.conf.CLIENT /etc/chrony/chrony.conf
+    *chrony command line*
+    chronyc
+    password <password> ->from the key file in /etc/chrony/chrony.keys
+    makestep
+    sources
+    sourcestats
+    help
+    *optional*
+    ntpdate -q starleth-hlpc
+    sudo ntpdate starleth-hlpc
 
 *TODO*
 - ROS wrapper for xsens

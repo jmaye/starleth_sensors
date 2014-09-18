@@ -1,4 +1,4 @@
-server starleth-hlpc
+server starleth-hlpc minpoll 1 maxpoll 2 polltarget 30 maxdelaydevratio 2
 keyfile /etc/chrony/chrony.keys
 commandkey 1
 driftfile /var/lib/chrony/chrony.drift
