@@ -1,0 +1,11 @@
+keyfile /etc/chrony/chrony.keys
+commandkey 1
+driftfile /var/lib/chrony/chrony.drift
+log measurements statistics tracking
+logdir /var/log/chrony
+maxupdateskew 100.0
+dumponexit
+dumpdir /var/lib/chrony
+local stratum 8
+allow 192.168.15
+logchange 0.5

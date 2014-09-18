@@ -1,3 +1,9 @@
+starleth-sensors (0.1-12) trusty; urgency=low
+
+  * adding chrony configuration 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Thu, 18 Sep 2014 10:21:56 +0200
+
 starleth-sensors (0.1-11) trusty; urgency=medium
 
   * depth registration for Kinect 
