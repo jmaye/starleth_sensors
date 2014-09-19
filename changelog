@@ -1,3 +1,9 @@
+starleth-sensors (0.1-18) trusty; urgency=low
+
+  * editing fstab
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 19 Sep 2014 13:07:04 +0200
+
 starleth-sensors (0.1-17) trusty; urgency=low
 
   * restructuring 

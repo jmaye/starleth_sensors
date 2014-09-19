@@ -12,4 +12,8 @@ UUID=1cf2c9af-156b-4f28-8a62-c484d963a746 /home           ext4    defaults      
 # swap was on /dev/sda6 during installation
 UUID=2e4b1cc3-7e76-496d-b6b5-d27d2b9025d6 none            swap    sw              0       0
 # mount the logging disk 1
-UUID=9676b32f-73f0-4ca9-94d6-4bf33d5c15fd /mnt/data       ext4    rw,suid,dev,exec,noauto,user,async,discard	0	2
+UUID=9676b32f-73f0-4ca9-94d6-4bf33d5c15fd /mnt/data1       ext4    rw,suid,dev,exec,noauto,user,async,discard	0	2
+# mount the logging disk 2
+UUID=064ba912-3da9-4855-89a6-3c33eb0ffae8 /mnt/data2       ext4    rw,suid,dev,exec,noauto,user,async,discard	0       2
+# mount the logging disk 3
+UUID=17fbd214-daf5-45a5-83d4-278f206849a8 /mnt/data3       ext4    rw,suid,dev,exec,noauto,user,async,discard   0       2
