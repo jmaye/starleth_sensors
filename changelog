@@ -1,3 +1,9 @@
+starleth-sensors (0.1-22) trusty; urgency=medium
+
+  * adding robot monitor for teamlio 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 19 Sep 2014 17:58:53 +0200
+
 starleth-sensors (0.1-21) trusty; urgency=low
 
   * update instructions 

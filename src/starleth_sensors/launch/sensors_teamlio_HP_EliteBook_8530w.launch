@@ -4,4 +4,8 @@
   <node name="leica" pkg="leica_interface" type="leica_node.py" respawn="true"
     output="screen">
   </node>
+  <!--robot-monitor-->
+  <node name="robot_monitor" pkg="rqt_robot_monitor" type="rqt_robot_monitor"
+    respawn="true" output="screen">
+  </node>
 </launch>
