@@ -1,35 +1,19 @@
-1. remove guest user:
-  sudo nano /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
-  add the line: allow-guest=false
-2. sudo apt-get update
+1. sudo apt-get update
    sudo apt-get upgrade
    sudo apt-get dist-upgrade
    sudo apt-get autoclean
    sudo apt-get autoremove
-3. sudo shutdown -r now
-4. sudo apt-get install python-software-properties vim htop openssh-server g++ cmake cmake-curses-gui chrony tmux screen
-5. sudo add-apt-repository ppa:jmaye/ethz
+2. sudo shutdown -r now
+3. sudo apt-get install python-software-properties vim htop openssh-server g++ cmake cmake-curses-gui chrony tmux screen
+4. sudo add-apt-repository ppa:jmaye/ethz
    sudo add-apt-repository ppa:jmaye/ros
    sudo add-apt-repository ppa:jmaye/starleth
    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
    TO BE CHANGED LATER ON TO POINT ON RALF'S PPA
-6. sudo apt-get update
-   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor ros-indigo-rqt-image-view
-7. edit hosts files:
-    *starleth-hlpc*:
-    sudo vi /etc/hosts
-    add the following lines:
-    192.168.15.3    teamlio-HP-EliteBook-8530w
-    192.168.15.15   velodyne
-    192.168.15.4    vi-sensor
-    *teamlio-HP-EliteBook-8530w*:
-    sudo vi /etc/hosts
-    add the following lines:
-    192.168.15.97   starleth-hlpc
-    192.168.15.15   velodyne
-    192.168.15.4    vi-sensor
-8. sudo apt-get install git
+5. sudo apt-get update
+   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
+6. sudo apt-get install git
    git config --global user.name "Jerome Maye"
    git config --global user.email "jerome.maye@mavt.ethz.ch"
    git config --global credential.helper cache
@@ -41,13 +25,15 @@
         br = branch
         ci = commit
         st = status
-9. ssh-keygen
+7. ssh-keygen
    copy the ~/.ssh/id_rsa.pub content to github, bitbuckets, and whatever
    machine
-10. mkdir ~/git
+8. mkdir ~/git
    cd ~/git
+   *Misc*
+   git clone git@github.com:jmaye/starleth_sensors.git
    *Xsens Mti*
-   git clone git@bitbucket.org:ethz-asl-lr/c_xsens_mti.git
+   git clone git@github.com:remod/receive_xsens.git
    *VI-Sensor*
    git clone git@github.com:ethz-asl/libvisensor_devel.git
    git clone git@github.com:ethz-asl/visensor_node_devel.git
@@ -68,12 +54,13 @@
    git clone git@github.com:ethz-asl/aslam_visual_inertial.git
    *Leica*
    git clone git@github.com:ethz-asl/leica_totalstation_interface.git
-11. vi ~/.bashrc
-    add the following lines:
-    alias indigo='source /opt/ros/indigo/setup.bash && export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/git'
-    alias indigo_starleth_connect='indigo && export ROS_MASTER_URI=http://starleth-hlpc:11311'
-    open new terminal tab for this to take effect
-12. create catkin workspace:
+9. cp ~/git/starleth_sensors/conf/home/starleth/.bashrc ~/
+   sudo cp ~/git/starleth_sensors/conf/etc/fstab /etc/
+   sudo cp ~/git/starleth_sensors/conf/etc/chrony/chrony.conf.<host> /etc/chrony.conf
+   sudo cp ~/git/starleth_sensors/conf/etc/hosts.<host> /etc/hosts
+   sudo cp ~/git/starleth_sensors/conf/usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf /usr/share/lightdm/lightdm.conf.d/
+   open new terminal
+10. create catkin workspace:
     indigo
     sudo rosdep init
     rosdep update
@@ -82,11 +69,7 @@
     catkin_init_workspace
     cd ~/catkin_ws/
     catkin_make
-    vi ~/.bashrc
-    add the line:
-    alias indigo_catkin_ws='source ~/catkin_ws/devel/setup.bash'
-    open new terminal tab for this to take effect
-13. cd ~/catkin_ws/src
+11. cd ~/catkin_ws/src
     ln -s ~/git/Schweizer-Messer/ schweizer-messer
     ln -s ~/git/catkin_simple/ catkin_simple
     ln -s ~/git/eigen_catkin/ eigen_catkin
@@ -96,8 +79,8 @@
     ln -s ~/git/libfovis/ libfovis
     ln -s ~/git/fovis/ fovis
     ln -s ~/git/viso2/ viso2
-14. cd ~/catkin_ws/
-    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view
+12. cd ~/catkin_ws/
+    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view
     indigo_catkin_ws
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release catkin_simple
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release eigen_catkin
@@ -111,20 +94,16 @@
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_calibration_flasher
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release fovis_ros
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release viso2_ros
-15. sudo apt-get install libssh2-1-dev
+13. sudo apt-get install libssh2-1-dev
     cd ~/git/visensor_tools/visensor_update
     mkdir build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make -j
-16. mkdir ~/rosbuild_ws
+14. mkdir ~/rosbuild_ws
     cd ~/rosbuild_ws
     rosws init . ~/catkin_ws/devel
-    vi ~/.bashrc
-    add the line:
-    alias indigo_rosbuild_ws='source ~/rosbuild_ws/setup.bash && export ROS_PACKAGE_PATH=${ROS_PACKAGE_PATH}:~/rosbuild_ws'
-    open new terminal for this to take effect
-17. indigo_rosbuild_ws
+15. indigo_rosbuild_ws
     cd ~/rosbuild_ws
     sudo apt-get install ros-indigo-tf ros-indigo-tf-conversions ros-indigo-eigen-conversions ros-indigo-joy ros-indigo-map-msgs ros-indigo-driver-base libargtable2-dev ros-indigo-rviz ros-indigo-rqt-console ros-indigo-rqt-py-common ros-indigo-sound-play
     ln -s ~/git/ethzasl_icp_mapping/ ethzasl_icp_mapping
@@ -139,12 +118,7 @@
     cd ..
     ln -s ~/git/starleth_tr/ starleth_tr
     rosmake starleth_tr
-    ln -s ~/git/c_xsens_mti/ c_xsens_mti
-    cd c_xsens_mti
-    git checkout starleth
-    cd ..
-    rosmake c_xsens_mti
-18. T&R:
+16. T&R:
     indigo_rosbuild_ws
     roslaunch starleth_tr tr_server_icp.launch
     *Teach*:
@@ -161,10 +135,10 @@
     rosrun icp_interface loadExistingPoseGraph <absolute_path_to_pose_graph>
     rosrun icp_interface transitionToFollowingAT <startID> <goadID> 10.0
     rosrun icp_interface transitionToIdle 10.0->at goal
-19. VI-sensor:
+17. VI-sensor:
     *update tools:*
     cd ~/git/visensor_tools/visensor_update/bin
-    ./visensor_update 10.0.0.1 update-develop or ./visensor_update <ip> update-develop if we have an DCHP server providing it an IP
+    ./visensor_update <ip> update-develop ->make sure you have Internet connection
     *calibration flasher tool*
     indigo_catkin_ws
     roscore
@@ -191,17 +165,17 @@
     rosbag record /cam0/image_raw /cam1/image_raw /imu0 -O dynamic3.bag
     The calibration process is described here:
     https://github.com/ethz-asl/kalibr/wiki
-20. Visual state estimation 1:
+18. Visual state estimation 1:
     roslaunch fovis_ros fovis_stereo.launch
-21. Visual state estimation 2:
+19. Visual state estimation 2:
     roslaunch viso2_ros demo.launch
-22. Visual inertial state estimation 3:
+20. Visual inertial state estimation 3:
     aslam_visual_inertial->from Leuti
-23. Leica:
+21. Leica:
     indigo
     rosrun leica_interface leica_node.py [options]
     rosrun leica_interface leica_node.py -h    * to get help on the options
-24. Kinect:
+22. Kinect:
     sudo apt-get install ros-indigo-freenect-stack
     error:
     [26687.769616] usb 2-7: Manufacturer: PrimeSense
@@ -211,16 +185,20 @@
     sudo apt-get install ros-indigo-openni2-launch
     roslaunch openni2_launch openni2.launch depth_registration:=true
     *topics:*
-    
-25. Diagnostics tools:
+    /camera/depth_registered/camera_info
+    /camera/depth_registered/image_raw
+    /camera/rgb/camera_info
+    /camera/rgb/image_raw
+    load_driver:=false->for playback
+23. Diagnostics tools:
     rosrun rqt_robot_monitor rqt_robot_monitor
     or
     rosrun rqt_runtime_monitor rqt_runtime_monitor
-26. Webcams:
+24. Webcams:
     sudo apt-get install ros-indigo-usb-cam
     rosrun usb_cam usb_cam_node __name:=usb_cam0 _video_device:=/dev/starleth/usb_cam0 _pixel_format:=yuyv _framerate:=15
     rosrun usb_cam usb_cam_node __name:=usb_cam1 _video_device:=/dev/starleth/usb_cam1 _pixel_format:=yuyv _framerate:=15
-27. *New Xsens*:
+25. *Xsens Mti 100*:
   sudo apt-get install libusb-dev
   1) Download the MT Software Suite and install it on a Windows machine (you may skip this step and use default sensor configuration), then download the MT SDK for Linux and install it on a Linux machine (this should be the machine that ROS is installed on).
      Here is the software website: http://www.xsens.com/en/mt-software-suite
@@ -231,21 +209,17 @@
   3) Connect the sensor to the Windows machine and open the MT Manager. Click the button on top of the screen for “output configuration options”, make sure “Turn Rate” and “Acceleration” are checked. You can also change frequency on the same page. If you skip this step, the sensor is configured to give orientation only by default.
   4) Download and install the ROS package.
   cd ~/git
-  git clone git@github.com:remod/receive_xsens.git
   cd receive_xsens
   git checkout indigo
   vi ./src/serialkey.h
   -> Fill in the serial key.
   cd ~/catkin_ws
+  indigo_catkin_ws
   ln -s ~/git/receive_xsens src/receive_xsens
   catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release receive_xsens
   5) Roslaunch the “receive_xsens.launch” file in /launch folder. The driver will publish sensor_msgs/Imu typed messages named /imu/data.
   Our serial key is R945-E2EF-RPP0-W86J-P408
-28. *Chrony*
-    on starleth-hlpc:
-    sudo cp ~/git/starleth_sensors/conf/chrony/chrony.conf.MASTER /etc/chrony/chrony.conf
-    on teamlio laptop:
-    sudo cp ~/git/starleth_sensors/conf/chrony/chrony.conf.CLIENT /etc/chrony/chrony.conf
+26. *Chrony*
     *chrony command line*
     chronyc
     password <password> ->from the key file in /etc/chrony/chrony.keys
@@ -264,5 +238,4 @@
 - Correcting the Velodyne scans w.r.t. pose estimator
 - launch scripts for logging all sensors
 - calibration of VI->dataset on site
-- analysis of CPU load, network load
 - better deployement strategy
