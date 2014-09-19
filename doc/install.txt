@@ -7,7 +7,7 @@
    sudo apt-get autoclean
    sudo apt-get autoremove
 3. sudo shutdown -r now
-4. sudo apt-get install python-software-properties vim htop openssh-server g++ cmake cmake-curses-gui chrony
+4. sudo apt-get install python-software-properties vim htop openssh-server g++ cmake cmake-curses-gui chrony tmux screen
 5. sudo add-apt-repository ppa:jmaye/ethz
    sudo add-apt-repository ppa:jmaye/ros
    sudo add-apt-repository ppa:jmaye/starleth
@@ -15,7 +15,7 @@
    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
    TO BE CHANGED LATER ON TO POINT ON RALF'S PPA
 6. sudo apt-get update
-   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
+   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor ros-indigo-rqt-image-view
 7. edit hosts files:
     *starleth-hlpc*:
     sudo vi /etc/hosts

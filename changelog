@@ -1,3 +1,9 @@
+starleth-sensors (0.1-15) trusty; urgency=low
+
+  * fstab mounting 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 19 Sep 2014 10:45:26 +0200
+
 starleth-sensors (0.1-14) trusty; urgency=low
 
   * new instructions 
