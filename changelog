@@ -1,3 +1,9 @@
+starleth-sensors (0.1-21) trusty; urgency=low
+
+  * update instructions 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 19 Sep 2014 17:54:20 +0200
+
 starleth-sensors (0.1-20) trusty; urgency=low
 
   * porting to ppa 
