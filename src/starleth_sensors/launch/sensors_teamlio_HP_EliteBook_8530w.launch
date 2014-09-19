@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <!--Leica-->
+  <node name="leica" pkg="leica_interface" type="leica_node.py" respawn="true"
+    output="screen">
+  </node>
+</launch>
