@@ -14,12 +14,12 @@
   </include>
   <!--usb_cam0-->
   <node name="usb_cam0" pkg="usb_cam" type="usb_cam_node" respawn="true"
-    output="screen" args="video_device:=/dev/starleth/usb_cam0
-    pixel_format:=yuyv _framerate:=15">
+    output="screen" args="_video_device:=/dev/starleth/usb_cam0
+    _pixel_format:=yuyv _framerate:=15">
   </node>
   <!--usb_cam1-->
   <node name="usb_cam1" pkg="usb_cam" type="usb_cam_node" respawn="true"
-    output="screen" args="video_device:=/dev/starleth/usb_cam1
-    pixel_format:=yuyv _framerate:=15">
+    output="screen" args="_video_device:=/dev/starleth/usb_cam1
+    _pixel_format:=yuyv _framerate:=15">
   </node>
 </launch>

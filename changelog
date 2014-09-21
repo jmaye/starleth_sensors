@@ -1,3 +1,9 @@
+starleth-sensors (0.1-23) precise; urgency=low
+
+  * bug fixes with underscore 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Sun, 21 Sep 2014 18:09:36 +0200
+
 starleth-sensors (0.1-22) trusty; urgency=medium
 
   * adding robot monitor for teamlio 
