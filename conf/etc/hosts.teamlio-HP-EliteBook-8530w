@@ -3,6 +3,7 @@
 192.168.15.97   starleth-hlpc
 192.168.15.15   velodyne
 192.168.15.4    vi-sensor
+192.168.15.254  starleth-wlan
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     ip6-localhost ip6-loopback
