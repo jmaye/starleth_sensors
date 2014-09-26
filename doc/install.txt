@@ -12,7 +12,7 @@
    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
    TO BE CHANGED LATER ON TO POINT ON RALF'S PPA
 5. sudo apt-get update
-   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-sensors-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
+   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo xsensmt-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-sensors-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
 6. sudo apt-get install git
    git config --global user.name "Jerome Maye"
    git config --global user.email "jerome.maye@mavt.ethz.ch"
@@ -32,8 +32,6 @@
    cd ~/git
    *Misc*
    git clone git@github.com:jmaye/starleth_sensors.git
-   *Xsens Mti*
-   git clone git@github.com:remod/receive_xsens.git
    *VI-Sensor*
    git clone git@github.com:ethz-asl/libvisensor_devel.git
    git clone git@github.com:ethz-asl/visensor_node_devel.git
@@ -80,7 +78,7 @@
     ln -s ~/git/fovis/ fovis
     ln -s ~/git/viso2/ viso2
 12. cd ~/catkin_ws/
-    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view
+    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view ros-indigo-nav-msgs ros-indigo-cmake-modules ros-indigo-rosmake
     indigo_catkin_ws
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release catkin_simple
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release eigen_catkin
@@ -198,28 +196,7 @@
     sudo apt-get install ros-indigo-usb-cam
     rosrun usb_cam usb_cam_node __name:=usb_cam0 _video_device:=/dev/starleth/usb_cam0 _pixel_format:=yuyv _framerate:=15
     rosrun usb_cam usb_cam_node __name:=usb_cam1 _video_device:=/dev/starleth/usb_cam1 _pixel_format:=yuyv _framerate:=15
-25. *Xsens Mti 100*:
-  sudo apt-get install libusb-dev
-  1) Download the MT Software Suite and install it on a Windows machine (you may skip this step and use default sensor configuration), then download the MT SDK for Linux and install it on a Linux machine (this should be the machine that ROS is installed on).
-     Here is the software website: http://www.xsens.com/en/mt-software-suite
-  2) Follow the instructions in the MT SDK for Linux to install the software and make sure the examples run correctly with the sensor. Here is a summary of the installation procedure.
-    (a) Unpack the MT SDK.
-    (b) Go to /shared_object folder, put the license number in the “serialkey.h” file, then “make” and “sudo make system_install”.
-    (c) Connect the sensor to the Linux machine and run one of the examples in /shared_object folder.
-  3) Connect the sensor to the Windows machine and open the MT Manager. Click the button on top of the screen for “output configuration options”, make sure “Turn Rate” and “Acceleration” are checked. You can also change frequency on the same page. If you skip this step, the sensor is configured to give orientation only by default.
-  4) Download and install the ROS package.
-  cd ~/git
-  cd receive_xsens
-  git checkout indigo
-  vi ./src/serialkey.h
-  -> Fill in the serial key.
-  cd ~/catkin_ws
-  indigo_catkin_ws
-  ln -s ~/git/receive_xsens src/receive_xsens
-  catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release receive_xsens
-  5) Roslaunch the “receive_xsens.launch” file in /launch folder. The driver will publish sensor_msgs/Imu typed messages named /imu/data.
-  Our serial key is R945-E2EF-RPP0-W86J-P408
-26. *Chrony*
+25. *Chrony*
     *chrony command line*
     chronyc
     password <password> ->from the key file in /etc/chrony/chrony.keys
@@ -232,10 +209,7 @@
     sudo ntpdate starleth-hlpc
 
 *TODO*
-- ROS wrapper for xsens
-- diagnostic tools for xsens, vi-sensor, T&R, velodyne_post, Kinect
-- Timestamp correction Velodyne
+- diagnostic tools for vi-sensor, T&R, velodyne_post, Kinect
+- Timestamp correction Velodyne, Xsens
 - Correcting the Velodyne scans w.r.t. pose estimator
-- launch scripts for logging all sensors
-- calibration of VI->dataset on site
 - better deployement strategy
