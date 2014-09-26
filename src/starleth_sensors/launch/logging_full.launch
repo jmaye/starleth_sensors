@@ -6,7 +6,7 @@
     /usb_cam0/image_raw /usb_cam1/image_raw /cam0/image_raw /cam1/image_raw
     /cust_imu0 /cust_mpu0 /cust_mpu1 /imu0 /mpu0 /mpu1 /camera/rgb/image_raw
     /camera/rgb/camera_info /camera/depth_registered/image_raw
-    /camera/depth_registered/camera_info /imu/data /leica/position /leica/error
+    /camera/depth_registered/camera_info /xsensmt/imu /leica/position /leica/error
     /rosout -o $(arg log_output)" output="screen">
   </node>
 </launch>

@@ -1,3 +1,9 @@
+starleth-sensors (0.1-26) trusty; urgency=medium
+
+  * updating log launch files 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 26 Sep 2014 20:23:51 +0200
+
 starleth-sensors (0.1-25) trusty; urgency=medium
 
   * updating installation 

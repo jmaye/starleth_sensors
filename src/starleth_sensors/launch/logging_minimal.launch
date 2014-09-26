@@ -5,7 +5,7 @@
     args="record /velodyne/binary_snappy /velodyne/imu /velodyne/temperature
     /usb_cam0/image_raw/compressed /usb_cam1/image_raw/compressed
     /cam0/image_raw /cam1/image_raw /cust_imu0 /cust_mpu0 /cust_mpu1 /imu0
-    /mpu0 /mpu1 /imu/data /leica/position /leica/error /rosout
+    /mpu0 /mpu1 /xsensmt/imu /leica/position /leica/error /rosout
     -o $(arg log_output)" output="screen">
   </node>
 </launch>
