@@ -33,11 +33,8 @@
    *Misc*
    git clone git@github.com:jmaye/starleth_sensors.git
    *VI-Sensor*
-   git clone git@github.com:ethz-asl/libvisensor_devel.git
-   git clone git@github.com:ethz-asl/visensor_node_devel.git
    git clone git@github.com:skybotix/visensor_tools.git
    *T&R*
-   git clone git@bitbucket.org:kruesip/artor-basics.git
    git clone git@github.com:ethz-asl/asrl_navigation.git
    git clone git@github.com:ethz-asl/vcharge_motion_planning.git
    git clone --recursive git@github.com:jmaye/ethzasl_icp_mapping.git
@@ -71,14 +68,12 @@
     ln -s ~/git/Schweizer-Messer/ schweizer-messer
     ln -s ~/git/catkin_simple/ catkin_simple
     ln -s ~/git/eigen_catkin/ eigen_catkin
-    ln -s ~/git/libvisensor_devel libvisensor_devel
-    ln -s ~/git/visensor_node_devel visensor_node_devel
     ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher
     ln -s ~/git/libfovis/ libfovis
     ln -s ~/git/fovis/ fovis
     ln -s ~/git/viso2/ viso2
 12. cd ~/catkin_ws/
-    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view ros-indigo-nav-msgs ros-indigo-cmake-modules ros-indigo-rosmake
+    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view ros-indigo-nav-msgs ros-indigo-cmake-modules ros-indigo-rosmake ros-indigo-roslang ros-indigo-mk-ros-indigo-turtlesim
     indigo_catkin_ws
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release catkin_simple
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release eigen_catkin
@@ -88,11 +83,10 @@
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release numpy_eigen
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_kinematics
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_logging
-    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_node
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_calibration_flasher
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release fovis_ros
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release viso2_ros
-13. sudo apt-get install libssh2-1-dev
+13. sudo apt-get install libssh2-1-dev libcurl4-gnutls-dev
     cd ~/git/visensor_tools/visensor_update
     mkdir build
     cd build
@@ -136,7 +130,7 @@
 17. VI-sensor:
     *update tools:*
     cd ~/git/visensor_tools/visensor_update/bin
-    ./visensor_update <ip> update-develop ->make sure you have Internet connection
+    ./visensor_update <ip> update-devel ->make sure you have Internet connection
     *calibration flasher tool*
     indigo_catkin_ws
     roscore
