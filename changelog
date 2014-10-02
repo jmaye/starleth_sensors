@@ -1,3 +1,9 @@
+starleth-sensors (0.1-28) trusty; urgency=medium
+
+  * new instructions 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Thu, 02 Oct 2014 08:51:12 +0200
+
 starleth-sensors (0.1-27) trusty; urgency=medium
 
   * updating installation instructions 

@@ -42,11 +42,6 @@
    git clone git@github.com:ethz-asl/Schweizer-Messer.git
    git clone git@github.com:catkin/catkin_simple.git
    git clone git@github.com:ethz-asl/eigen_catkin.git
-   *VO*
-   git clone git@github.com:skybotix/fovis.git
-   git clone git@github.com:jmaye/libfovis.git
-   git clone git@github.com:jmaye/viso2.git
-   git clone git@github.com:ethz-asl/aslam_visual_inertial.git
    *Leica*
    git clone git@github.com:ethz-asl/leica_totalstation_interface.git
 9. cp ~/git/starleth_sensors/conf/home/starleth/.bashrc ~/
@@ -69,9 +64,6 @@
     ln -s ~/git/catkin_simple/ catkin_simple
     ln -s ~/git/eigen_catkin/ eigen_catkin
     ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher
-    ln -s ~/git/libfovis/ libfovis
-    ln -s ~/git/fovis/ fovis
-    ln -s ~/git/viso2/ viso2
 12. cd ~/catkin_ws/
     sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view ros-indigo-nav-msgs ros-indigo-cmake-modules ros-indigo-rosmake ros-indigo-roslang ros-indigo-mk-ros-indigo-turtlesim
     indigo_catkin_ws
@@ -84,8 +76,6 @@
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_kinematics
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release sm_logging
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release visensor_calibration_flasher
-    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release fovis_ros
-    catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release viso2_ros
 13. sudo apt-get install libssh2-1-dev libcurl4-gnutls-dev
     cd ~/git/visensor_tools/visensor_update
     mkdir build
@@ -138,7 +128,6 @@
     rosrun visensor_calibration_flasher visensor_calibration_flasher
     *launch the node*
     rosrun visensor_node visensor_node
-    roslaunch visensor_node dense.launch
     *dynamic reconfigure*
     sudo apt-get install ros-indigo-rqt-reconfigure
     rosrun rqt_reconfigure rqt_reconfigure
@@ -157,17 +146,11 @@
     rosbag record /cam0/image_raw /cam1/image_raw /imu0 -O dynamic3.bag
     The calibration process is described here:
     https://github.com/ethz-asl/kalibr/wiki
-18. Visual state estimation 1:
-    roslaunch fovis_ros fovis_stereo.launch
-19. Visual state estimation 2:
-    roslaunch viso2_ros demo.launch
-20. Visual inertial state estimation 3:
-    aslam_visual_inertial->from Leuti
-21. Leica:
+18. Leica:
     indigo
     rosrun leica_interface leica_node.py [options]
     rosrun leica_interface leica_node.py -h    * to get help on the options
-22. Kinect:
+19. Kinect:
     sudo apt-get install ros-indigo-freenect-stack
     error:
     [26687.769616] usb 2-7: Manufacturer: PrimeSense
@@ -182,15 +165,15 @@
     /camera/rgb/camera_info
     /camera/rgb/image_raw
     load_driver:=false->for playback
-23. Diagnostics tools:
+20. Diagnostics tools:
     rosrun rqt_robot_monitor rqt_robot_monitor
     or
     rosrun rqt_runtime_monitor rqt_runtime_monitor
-24. Webcams:
+21. Webcams:
     sudo apt-get install ros-indigo-usb-cam
     rosrun usb_cam usb_cam_node __name:=usb_cam0 _video_device:=/dev/starleth/usb_cam0 _pixel_format:=yuyv _framerate:=15
     rosrun usb_cam usb_cam_node __name:=usb_cam1 _video_device:=/dev/starleth/usb_cam1 _pixel_format:=yuyv _framerate:=15
-25. *Chrony*
+22. *Chrony*
     *chrony command line*
     chronyc
     password <password> ->from the key file in /etc/chrony/chrony.keys
@@ -201,6 +184,9 @@
     *optional*
     ntpdate -q starleth-hlpc
     sudo ntpdate starleth-hlpc
+
+*NOTE*
+- for ssd, run periodically the command: sudo fstrim -v <mount-point>
 
 *TODO*
 - diagnostic tools for vi-sensor, T&R, velodyne_post, Kinect
