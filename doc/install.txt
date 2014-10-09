@@ -44,7 +44,8 @@
    git clone git@github.com:ethz-asl/eigen_catkin.git
    *Leica*
    git clone git@github.com:ethz-asl/leica_totalstation_interface.git
-9. cp ~/git/starleth_sensors/conf/home/starleth/.bashrc ~/
+9. Warning: only do this if you understand the consequences!
+   cp ~/git/starleth_sensors/conf/home/starleth/.bashrc ~/
    sudo cp ~/git/starleth_sensors/conf/etc/fstab /etc/
    sudo cp ~/git/starleth_sensors/conf/etc/chrony/chrony.conf.<host> /etc/chrony.conf
    sudo cp ~/git/starleth_sensors/conf/etc/hosts.<host> /etc/hosts
@@ -65,7 +66,7 @@
     ln -s ~/git/eigen_catkin/ eigen_catkin
     ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher
 12. cd ~/catkin_ws/
-    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view ros-indigo-nav-msgs ros-indigo-cmake-modules ros-indigo-rosmake ros-indigo-roslang ros-indigo-mk-ros-indigo-turtlesim
+    sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view ros-indigo-nav-msgs ros-indigo-cmake-modules ros-indigo-rosmake ros-indigo-roslang ros-indigo-mk ros-indigo-turtlesim
     indigo_catkin_ws
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release catkin_simple
     catkin build --merge-devel -DCMAKE_BUILD_TYPE=Release eigen_catkin
@@ -113,6 +114,7 @@
     bin/offlinePointCloudExporter camera <absolute_path_to_pose_graph> <absolute_path_to_output/prefix>
     sudo apt-get install paraview
     load the vtk files in paraview, press the Apply button
+    to colorize the point cloud nicely, highlight its entry on the top left, press ctrl+space (new filter), enter "elevation", choose axis and press Apply
     *Repeat*:
     rosrun icp_interface loadExistingPoseGraph <absolute_path_to_pose_graph>
     rosrun icp_interface transitionToFollowingAT <startID> <goadID> 10.0
@@ -150,13 +152,17 @@
     indigo
     rosrun leica_interface leica_node.py [options]
     rosrun leica_interface leica_node.py -h    * to get help on the options
-19. Kinect:
-    sudo apt-get install ros-indigo-freenect-stack
+19. Primesense 1.08:
     error:
     [26687.769616] usb 2-7: Manufacturer: PrimeSense
     [26687.769865] usb 2-7: Not enough bandwidth for new device state.
     [26687.769872] usb 2-7: can't set config #1, error -28
     Updating firmware makes it work!
+    Primesense 1.09:
+    ros node does not recognize device
+    workaround:
+    install https://github.com/OpenNI/OpenNI (tested with Stable-1.5.7.10) and https://github.com/PrimeSense/Sensor (tested with Stable-5.1.6.6).
+    Primesense 1.08 and 1.09:
     sudo apt-get install ros-indigo-openni2-launch
     roslaunch openni2_launch openni2.launch depth_registration:=true
     *topics:*
