@@ -14,10 +14,6 @@
 5. sudo apt-get update
    sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo xsensmt-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-sensors-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
 6. sudo apt-get install git
-   git config --global user.name "Jerome Maye"
-   git config --global user.email "jerome.maye@mavt.ethz.ch"
-   git config --global credential.helper cache
-   git config --global push.default simple
    vi ~/.gitconfig
    add the following:
    [alias]
@@ -31,19 +27,19 @@
 8. mkdir ~/git
    cd ~/git
    *Misc*
-   git clone git@github.com:jmaye/starleth_sensors.git
+   git clone https://github.com/jmaye/starleth_sensors.git
    *VI-Sensor*
-   git clone git@github.com:skybotix/visensor_tools.git
+   git clone https://github.com/skybotix/visensor_tools.git
    *T&R*
-   git clone git@github.com:ethz-asl/asrl_navigation.git
-   git clone git@github.com:ethz-asl/vcharge_motion_planning.git
-   git clone --recursive git@github.com:jmaye/ethzasl_icp_mapping.git
-   git clone git@github.com:jmaye/starleth_tr.git
-   git clone git@github.com:ethz-asl/Schweizer-Messer.git
-   git clone git@github.com:catkin/catkin_simple.git
-   git clone git@github.com:ethz-asl/eigen_catkin.git
+   git clone https://github.com/ethz-asl/asrl_navigation.git
+   git clone https://github.com/ethz-asl/vcharge_motion_planning.git
+   git clone --recursive https://github.com/jmaye/ethzasl_icp_mapping.git
+   git clone https://github.com/jmaye/starleth_tr.git
+   git clone https://github.com/ethz-asl/Schweizer-Messer.git
+   git clone https://github.com/catkin/catkin_simple.git
+   git clone https://github.com/ethz-asl/eigen_catkin.git
    *Leica*
-   git clone git@github.com:ethz-asl/leica_totalstation_interface.git
+   git clone https://github.com/ethz-asl/leica_totalstation_interface.git
 9. Warning: only do this if you understand the consequences!
    cp ~/git/starleth_sensors/conf/home/starleth/.bashrc ~/
    sudo cp ~/git/starleth_sensors/conf/etc/fstab /etc/
@@ -193,9 +189,14 @@
 
 *NOTE*
 - for ssd, run periodically the command: sudo fstrim -v <mount-point>
+- modify grub such that it does not hang at bootup (done locally)
+- power button does the shutdown (done locally)
+- init script for the starleth_tf_publisher (done locally)
+- automatic logging from USB stick (done locally)
 
 *TODO*
 - diagnostic tools for vi-sensor, T&R, velodyne_post, Kinect
 - Timestamp correction Velodyne, Xsens
 - Correcting the Velodyne scans w.r.t. pose estimator
 - better deployement strategy
+- improve the init scripts, one Debian package per computer

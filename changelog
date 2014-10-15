@@ -1,3 +1,9 @@
+starleth-sensors (0.1-31) precise; urgency=low
+
+  * adding new instructions 
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Wed, 15 Oct 2014 13:37:11 +0200
+
 starleth-sensors (0.1-28) trusty; urgency=medium
 
   * new instructions 
