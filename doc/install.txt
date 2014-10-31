@@ -8,11 +8,12 @@
 4. sudo add-apt-repository ppa:jmaye/ethz
    sudo add-apt-repository ppa:jmaye/ros
    sudo add-apt-repository ppa:jmaye/starleth
+   sudo add-apt-repository ppa:stephane.magnenat/trusty
    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
    wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
    TO BE CHANGED LATER ON TO POINT ON RALF'S PPA
 5. sudo apt-get update
-   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo xsensmt-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-sensors-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor
+   sudo apt-get install velodyne-ros-indigo velodyne-post-ros-indigo xsensmt-ros-indigo starleth-system-monitor-ros-indigo starleth-diagnostics-ros-indigo starleth-sensors-ros-indigo starleth-udev starleth-init ros-indigo-rqt-robot-monitor ros-indigo-rqt-runtime-monitor libnabo-dev
 6. sudo apt-get install git
    vi ~/.gitconfig
    add the following:
@@ -30,10 +31,11 @@
    git clone https://github.com/jmaye/starleth_sensors.git
    *VI-Sensor*
    git clone https://github.com/skybotix/visensor_tools.git
-   *T&R*
-   git clone https://github.com/ethz-asl/asrl_navigation.git
-   git clone https://github.com/ethz-asl/vcharge_motion_planning.git
-   git clone --recursive https://github.com/jmaye/ethzasl_icp_mapping.git
+   *Localization and Mapping*
+   git clone https://github.com/ethz-asl/libpointmatcher.git
+   git clone -b starleth_devel https://github.com/ethz-asl/asrl_navigation.git
+   git clone -b starleth_devel https://github.com/remod/vcharge_motion_planning.git
+   git clone -b indigo_devel_starleth https://bitbucket.org/ethz-asl-lr/c_ethzasl_icp_mapping.git ethzasl_icp_mapping
    git clone https://github.com/jmaye/starleth_tr.git
    git clone https://github.com/ethz-asl/Schweizer-Messer.git
    git clone https://github.com/catkin/catkin_simple.git
@@ -58,9 +60,10 @@
     catkin_make
 11. cd ~/catkin_ws/src
     ln -s ~/git/Schweizer-Messer/ schweizer-messer
-    ln -s ~/git/catkin_simple/ catkin_simple
-    ln -s ~/git/eigen_catkin/ eigen_catkin
-    ln -s ~/git/visensor_tools/visensor_calibration_flasher/ visensor_calibration_flasher
+    ln -s ~/git/catkin_simple/ .
+    ln -s ~/git/eigen_catkin/ .
+    ln -s ~/git/visensor_tools/visensor_calibration_flasher/ .
+    ln -s ~/git/ethzasl_icp_mapping/ .
 12. cd ~/catkin_ws/
     sudo apt-get install python-catkintools python-rosinstall ros-indigo-camera-info-manager ros-indigo-cv-bridge ros-indigo-pcl-ros ros-indigo-stereo-image-proc ros-indigo-image-view ros-indigo-rqt-image-view ros-indigo-nav-msgs ros-indigo-cmake-modules ros-indigo-rosmake ros-indigo-roslang ros-indigo-mk ros-indigo-turtlesim
     indigo_catkin_ws
@@ -79,23 +82,23 @@
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release ..
     make -j
+    cd ~/git/libpointmatcher
+    mkdir build
+    cd build
+    cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+    make -j
+    sudo make install
+    cd ~/catkin_ws
+    catkin_make
 14. mkdir ~/rosbuild_ws
     cd ~/rosbuild_ws
     rosws init . ~/catkin_ws/devel
 15. indigo_rosbuild_ws
     cd ~/rosbuild_ws
     sudo apt-get install ros-indigo-tf ros-indigo-tf-conversions ros-indigo-eigen-conversions ros-indigo-joy ros-indigo-map-msgs ros-indigo-driver-base libargtable2-dev ros-indigo-rviz ros-indigo-rqt-console ros-indigo-rqt-py-common ros-indigo-sound-play
-    ln -s ~/git/ethzasl_icp_mapping/ ethzasl_icp_mapping
-    rosdep install ethzasl_icp_mapping
-    ln -s ~/git/asrl_navigation/ asrl_navigation
-    cd asrl_navigation
-    git checkout starleth_devel
-    cd ..
-    ln -s ~/git/vcharge_motion_planning/ vcharge_motion_planning
-    cd vcharge_motion_planning
-    git checkout starleth_devel
-    cd ..
-    ln -s ~/git/starleth_tr/ starleth_tr
+    ln -s ~/git/asrl_navigation/ .
+    ln -s ~/git/vcharge_motion_planning/ .
+    ln -s ~/git/starleth_tr/ .
     rosmake starleth_tr
 16. T&R:
     indigo_rosbuild_ws
